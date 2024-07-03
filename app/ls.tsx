@@ -64,20 +64,20 @@ export default function LemonadeStand() {
           alt="Knox's Lemonade Stand"
           width={400}
           height={133}
-          className="mb-2 mx-auto"
+          className="mb-2 mx-auto" // Reduced mb-6 to mb-2
         />
         <div className="w-full max-w-sm mx-auto">
-          <div className="border-2 border-palette-text bg-palette-menu p-6 rounded-lg shadow-button">
-            <h2 className="text-2xl font-semibold text-palette-text mb-4 text-center">Menu</h2>
+          <div className="border-2 border-palette-text bg-palette-menu p-4 rounded-lg shadow-button"> // Reduced p-6 to p-4
+            <h2 className="text-xl font-semibold text-palette-text mb-2 text-center">Menu</h2> // Reduced text-2xl to text-xl and mb-4 to mb-2
             {menu.map((item, index) => (
-              <div key={index} className="flex flex-col mb-4">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-lg font-medium text-palette-text">{item.name}</span>
+              <div key={index} className="flex flex-col mb-2"> // Reduced mb-4 to mb-2
+                <div className="flex justify-between items-center mb-1"> // Reduced mb-2 to mb-1
+                  <span className="text-base font-medium text-palette-text">{item.name}</span> // Changed text-lg to text-base
                   <span className="text-sm text-palette-text">${item.price.toFixed(2)} - Qty: {item.quantity}</span>
                 </div>
                 <button
                   onClick={() => addToTotal(index)}
-                  className="w-full px-6 py-2 border-2 border-palette-text bg-palette-button text-lg font-medium text-palette-text shadow-button transition-all duration-300 ease-out hover:shadow-buttonHover"
+                  className="w-full px-4 py-1 border-2 border-palette-text bg-palette-button text-base font-medium text-palette-text shadow-button transition-all duration-300 ease-out hover:shadow-buttonHover"
                 >
                   Add
                 </button>
@@ -85,18 +85,18 @@ export default function LemonadeStand() {
             ))}
           </div>
         </div>
-        <div className="mt-6 text-center w-full max-w-sm mx-auto">
-          <h2 className="text-2xl font-bold text-palette-text mb-4">Total: ${total.toFixed(2)}</h2>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
+        <div className="mt-4 text-center w-full max-w-sm mx-auto"> // Reduced mt-6 to mt-4
+          <h2 className="text-xl font-bold text-palette-text mb-2">Total: ${total.toFixed(2)}</h2> // Reduced text-2xl to text-xl and mb-4 to mb-2
+          <div className="flex flex-col sm:flex-row justify-center gap-2"> // Reduced gap-4 to gap-2
             <button
               onClick={venmoPayment}
-              className="w-full sm:w-auto px-6 py-2 border-2 border-palette-text bg-palette-button text-lg font-medium text-palette-text shadow-button transition-all duration-300 ease-out hover:shadow-buttonHover"
+              className="w-full sm:w-auto px-4 py-1 border-2 border-palette-text bg-palette-button text-base font-medium text-palette-text shadow-button transition-all duration-300 ease-out hover:shadow-buttonHover"
             >
               Pay with Venmo
             </button>
             <button
               onClick={clearAll}
-              className="w-full sm:w-auto px-6 py-2 border-2 border-palette-text bg-palette-button text-lg font-medium text-palette-text shadow-button transition-all duration-300 ease-out hover:shadow-buttonHover"
+              className="w-full sm:w-auto px-4 py-1 border-2 border-palette-text bg-palette-button text-base font-medium text-palette-text shadow-button transition-all duration-300 ease-out hover:shadow-buttonHover"
             >
               Clear All
             </button>
