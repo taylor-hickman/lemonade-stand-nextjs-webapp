@@ -29,7 +29,7 @@ export default function LemonadeStand() {
   const total = menu.reduce((sum, item) => sum + item.price * item.quantity, 0)
   
   const venmoPayment = () => {
-    const venmoUsername = 'Abigail-Darlington'
+    const venmoUsername = 'AmandaCuddy'
     const paymentDescription = "Knox's Lemonade Stand Payment"
     const amount = total.toFixed(2)
 
@@ -55,8 +55,6 @@ export default function LemonadeStand() {
       }
     }, 500)
   }
-
-  const total = menu.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
   return (
     <div className="flex flex-col items-center w-full max-w-4xl mx-auto p-4">
