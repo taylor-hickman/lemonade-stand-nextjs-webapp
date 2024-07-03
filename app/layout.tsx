@@ -1,10 +1,7 @@
 import './globals.css'
-import { Metadata } from 'next'
+import { Inter } from 'next/font/google'
 
-export const metadata: Metadata = {
-  title: "Knox's Lemonade Stand",
-  description: 'A refreshing lemonade stand by Knox',
-}
+const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({
   children,
@@ -13,7 +10,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={inter.className}>{children}</body>
     </html>
   )
 }
