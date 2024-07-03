@@ -6,14 +6,6 @@ import { generateVenmoUrl } from '../utils/venmo'
 
 export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: MenuItem[] }) {
   const [menu, setMenu] = useState<MenuItem[]>(initialMenuItems)
-  const [windowHeight, setWindowHeight] = useState<number>(0)
-
-  useEffect(() => {
-    const updateHeight = () => setWindowHeight(window.innerHeight)
-    updateHeight()
-    window.addEventListener('resize', updateHeight)
-    return () => window.removeEventListener('resize', updateHeight)
-  }, [])
 
   const addToTotal = (index: number) => {
     setMenu(prevMenu => prevMenu.map((item, i) => 
@@ -32,9 +24,23 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
     window.open(venmoUrl, '_blank')
   }
 
+  const LemonDivider = () => (
+    <div className="w-full max-w-sm mx-auto flex items-center justify-center my-4">
+      <div className="flex-grow h-px bg-palette-text"></div>
+      <Image
+        src="/images/lemon.png"
+        alt="Lemon divider"
+        width={30}
+        height={30}
+        className="mx-2"
+      />
+      <div className="flex-grow h-px bg-palette-text"></div>
+    </div>
+  )
+
   return (
-    <div className="bg-palette-background flex flex-col items-center w-full" style={{ minHeight: `${windowHeight}px` }}>
-      <div className="w-full max-w-4xl mx-auto p-6 flex flex-col h-full">
+    <div className="bg-palette-background flex flex-col items-center justify-between w-full min-h-screen py-6">
+      <div className="w-full max-w-4xl mx-auto px-6 flex flex-col flex-grow">
         <div className="flex-grow-0">
           <Image 
             src="/images/knox-lemonade-logo.png"
@@ -44,15 +50,7 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
             className="mb-2 mx-auto"
             priority
           />
-          <div className="w-full max-w-sm mx-auto h-1 bg-palette-text mb-4 relative">
-            <Image
-              src="/images/lemon.png"
-              alt="Lemon divider"
-              width={20}
-              height={20}
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-            />
-          </div>
+          <LemonDivider />
         </div>
         
         <div className="flex-grow w-full max-w-sm mx-auto">
@@ -78,15 +76,7 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
         
         <div className="flex-grow-0 mt-4 text-center w-full max-w-sm mx-auto"> 
           <h2 className="text-xl font-bold text-palette-text mb-2">Total: ${total.toFixed(2)}</h2> 
-          <div className="w-full max-w-sm mx-auto h-1 bg-palette-text my-4 relative">
-            <Image
-              src="/images/lemon.png"
-              alt="Lemon divider"
-              width={20}
-              height={20}
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-            />
-          </div>
+          <LemonDivider />
           <div className="flex flex-col sm:flex-row justify-center gap-2"> 
             <button
               onClick={handleVenmoPayment}
