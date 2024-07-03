@@ -58,7 +58,7 @@ export default function LemonadeStand() {
 
   return (
     <div className="bg-palette-background min-h-screen flex flex-col items-center w-full">
-      <div className="w-full max-w-4xl mx-auto p-4">
+      <div className="w-full max-w-4xl mx-auto p-6">
         <Image 
           src="/images/knox-lemonade-logo.png"
           alt="Knox's Lemonade Stand"
