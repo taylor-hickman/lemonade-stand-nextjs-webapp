@@ -9,13 +9,16 @@ module.exports = {
     extend: {
       colors: {
         palette: {
-          text: '#000000',  // Adjust this color as needed
-          tertiary: '#FFFF00',  // Adjust this color as needed
+          text: '#5a4f4f',  
+          tertiary: '#FFFF00',
+          button: '#ffd700', 
+          menu: '#ffffd1',   
+          background: '#a8e0e0', 
         },
       },
       boxShadow: {
-        'button': '4px 4px 0 0 rgba(0,0,0,1)',
-        'buttonHover': '2px 2px 0 0 rgba(0,0,0,1)',
+        'button': '2px 2px 0 0 var(--color-palette-text)',
+        'buttonHover': '3px 3px 0 0 var(--color-palette-text)',
       },
     },
   },

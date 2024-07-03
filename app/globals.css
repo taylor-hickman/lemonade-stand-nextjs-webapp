@@ -4,30 +4,30 @@
 
 :root {
   --color-palette-text: #5a4f4f;
-  --color-palette-button: #ffd700;  /* Original yellow color */
-  --color-palette-menu: #ffffd1;    /* Pastel yellow */
+  --color-palette-button: #ffd700;  
+  --color-palette-menu: #ffffd1;    
+  --color-palette-background: #a8e0e0; 
+}
+
+body {
+  background-color: var(--color-palette-background);
 }
 
 .text-palette-text {
   color: var(--color-palette-text);
 }
-
 .bg-palette-button {
   background-color: var(--color-palette-button);
 }
-
 .bg-palette-menu {
   background-color: var(--color-palette-menu);
 }
-
 .border-palette-text {
   border-color: var(--color-palette-text);
 }
-
 .shadow-button {
   box-shadow: 2px 2px 0 var(--color-palette-text);
 }
-
 .shadow-buttonHover {
   box-shadow: 3px 3px 0 var(--color-palette-text);
 }
