@@ -66,23 +66,24 @@ export default function LemonadeStand() {
         className="mb-6"
       />
       <div className="w-full max-w-md mx-auto">
-        <div className="border-2 border-palette-text bg-palette-menu p-6 rounded-lg shadow-button">
-          <h2 className="text-2xl font-semibold text-palette-text mb-4 text-center">Menu</h2>
-          {menu.map((item, index) => (
-            <div key={index} className="flex justify-between items-center mb-4">
-              <span className="text-lg font-medium text-palette-text">
-                {item.name} - ${item.price.toFixed(2)} (Qty: {item.quantity})
-              </span>
-              <button
-                onClick={() => addToTotal(index)}
-                className="px-6 py-2 border-2 border-palette-text bg-palette-button text-lg font-medium text-palette-text shadow-button transition-all duration-300 ease-out hover:shadow-buttonHover"
-              >
-                Add
-              </button>
-            </div>
-          ))}
+  <div className="border-2 border-palette-text bg-palette-menu p-6 rounded-lg shadow-button">
+    <h2 className="text-2xl font-semibold text-palette-text mb-4 text-center">Menu</h2>
+    {menu.map((item, index) => (
+      <div key={index} className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
+        <div className="flex flex-col mb-2 sm:mb-0">
+          <span className="text-lg font-medium text-palette-text">{item.name}</span>
+          <span className="text-sm text-palette-text">${item.price.toFixed(2)} - Qty: {item.quantity}</span>
         </div>
+        <button
+          onClick={() => addToTotal(index)}
+          className="px-6 py-2 border-2 border-palette-text bg-palette-button text-lg font-medium text-palette-text shadow-button transition-all duration-300 ease-out hover:shadow-buttonHover"
+        >
+          Add
+        </button>
       </div>
+    ))}
+  </div>
+</div>
       <div className="mt-6 text-center">
         <h2 className="text-2xl font-bold text-palette-text">Total: ${total.toFixed(2)}</h2>
         <button
