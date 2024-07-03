@@ -64,7 +64,7 @@ export default function LemonadeStand() {
           alt="Knox's Lemonade Stand"
           width={400}
           height={133}
-          className="mb-6 mx-auto"
+          className="mb-2 mx-auto"
         />
         <div className="w-full max-w-sm mx-auto">
           <div className="border-2 border-palette-text bg-palette-menu p-6 rounded-lg shadow-button">
