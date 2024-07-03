@@ -13,7 +13,7 @@ module.exports = {
           tertiary: '#FFFF00',
           button: '#ffd700', 
           menu: '#ffffd1',   
-          background: '#a8e0e0', 
+          background: '#84bec4', 
         },
       },
       boxShadow: {
