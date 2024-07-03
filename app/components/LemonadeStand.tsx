@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import { MenuItem } from '../types'
 import { generateVenmoUrl } from '../utils/venmo'
@@ -25,7 +25,7 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
   }
 
   const LemonDivider = () => (
-    <div className="w-full max-w-sm mx-auto flex items-center justify-center my-4">
+    <div className="w-full flex items-center justify-center my-4">
       <div className="flex-grow h-px bg-palette-text"></div>
       <Image
         src="/images/lemon.png"
@@ -39,9 +39,9 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
   )
 
   return (
-    <div className="bg-palette-background flex flex-col items-center justify-between w-full min-h-screen py-6">
-      <div className="w-full max-w-4xl mx-auto px-6 flex flex-col flex-grow">
-        <div className="flex-grow-0">
+    <div className="bg-palette-background min-h-screen flex flex-col">
+      <div className="flex-grow flex flex-col justify-between max-w-sm mx-auto w-full px-4 py-6">
+        <div>
           <Image 
             src="/images/knox-lemonade-logo.png"
             alt="Knox's Lemonade Stand"
@@ -53,7 +53,7 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
           <LemonDivider />
         </div>
         
-        <div className="flex-grow w-full max-w-sm mx-auto">
+        <div className="flex-grow flex flex-col justify-center my-4">
           <div className="border-2 border-palette-text bg-palette-menu p-4 rounded-lg shadow-button"> 
             <h2 className="text-xl font-semibold text-palette-text mb-2 text-center">Menu</h2> 
             {menu.map((item, index) => (
@@ -74,21 +74,21 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
           </div>
         </div>
         
-        <div className="flex-grow-0 mt-4 text-center w-full max-w-sm mx-auto"> 
-          <h2 className="text-xl font-bold text-palette-text mb-2">Total: ${total.toFixed(2)}</h2> 
+        <div>
+          <h2 className="text-xl font-bold text-palette-text mb-2 text-center">Total: ${total.toFixed(2)}</h2> 
           <LemonDivider />
-          <div className="flex flex-col sm:flex-row justify-center gap-2"> 
+          <div className="flex flex-col gap-2"> 
             <button
               onClick={handleVenmoPayment}
               aria-label="Pay with Venmo"
-              className="w-full sm:w-auto px-4 py-1 border-2 border-palette-text bg-palette-button text-base font-medium text-palette-text shadow-button transition-all duration-300 ease-out hover:shadow-buttonHover"
+              className="w-full px-4 py-2 border-2 border-palette-text bg-palette-button text-base font-medium text-palette-text shadow-button transition-all duration-300 ease-out hover:shadow-buttonHover"
             >
               Pay with Venmo
             </button>
             <button
               onClick={clearAll}
               aria-label="Clear all items"
-              className="w-full sm:w-auto px-4 py-1 border-2 border-palette-text bg-palette-button text-base font-medium text-palette-text shadow-button transition-all duration-300 ease-out hover:shadow-buttonHover"
+              className="w-full px-4 py-2 border-2 border-palette-text bg-palette-button text-base font-medium text-palette-text shadow-button transition-all duration-300 ease-out hover:shadow-buttonHover"
             >
               Clear All
             </button>
