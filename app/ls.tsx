@@ -12,8 +12,7 @@ export default function LemonadeStand() {
   const [total, setTotal] = useState(0)
   const menu: MenuItem[] = [
     { name: 'Classic Lemonade', price: 1 },
-    { name: 'Strawberry Lemonade', price: 1.5 },
-    { name: 'Airheads', price: .50 },
+    { name: 'Airheads', price: .25 },
   ]
 
   const addToTotal = (price: number) => {
