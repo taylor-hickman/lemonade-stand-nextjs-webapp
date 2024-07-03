@@ -1,24 +1,33 @@
 'use client'
-
 import { useState } from 'react'
 import Image from 'next/image'
 
 interface MenuItem {
   name: string;
   price: number;
+  quantity: number;
 }
 
 export default function LemonadeStand() {
-  const [total, setTotal] = useState(0)
-  const menu: MenuItem[] = [
-    { name: 'Classic Lemonade', price: 1 },
-    { name: 'Airheads', price: .25 },
-  ]
+  const [menu, setMenu] = useState<MenuItem[]>([
+    { name: 'Classic Lemonade', price: 1, quantity: 0 },
+    { name: 'Airheads', price: 0.25, quantity: 0 },
+  ])
 
-  const addToTotal = (price: number) => {
-    setTotal(prevTotal => prevTotal + price)
+  const addToTotal = (index: number) => {
+    setMenu(prevMenu => {
+      const newMenu = [...prevMenu]
+      newMenu[index].quantity += 1
+      return newMenu
+    })
   }
 
+  const clearAll = () => {
+    setMenu(prevMenu => prevMenu.map(item => ({ ...item, quantity: 0 })))
+  }
+
+  const total = menu.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  
   const venmoPayment = () => {
     const venmoUsername = 'Abigail-Darlington'
     const paymentDescription = "Knox's Lemonade Stand Payment"
@@ -61,9 +70,11 @@ export default function LemonadeStand() {
           <h2 className="text-2xl font-semibold text-palette-text mb-4 text-center">Menu</h2>
           {menu.map((item, index) => (
             <div key={index} className="flex justify-between items-center mb-4">
-              <span className="text-lg font-medium text-palette-text">{item.name} - ${item.price.toFixed(2)}</span>
+              <span className="text-lg font-medium text-palette-text">
+                {item.name} - ${item.price.toFixed(2)} (Qty: {item.quantity})
+              </span>
               <button
-                onClick={() => addToTotal(item.price)}
+                onClick={() => addToTotal(index)}
                 className="px-6 py-2 border-2 border-palette-text bg-palette-button text-lg font-medium text-palette-text shadow-button transition-all duration-300 ease-out hover:shadow-buttonHover"
               >
                 Add
@@ -79,6 +90,12 @@ export default function LemonadeStand() {
           className="mt-4 px-6 py-2 border-2 border-palette-text bg-palette-button text-lg font-medium text-palette-text shadow-button transition-all duration-300 ease-out hover:shadow-buttonHover"
         >
           Pay with Venmo
+        </button>
+        <button
+          onClick={clearAll}
+          className="mt-4 ml-4 px-6 py-2 border-2 border-palette-text bg-palette-button text-lg font-medium text-palette-text shadow-button transition-all duration-300 ease-out hover:shadow-buttonHover"
+        >
+          Clear All
         </button>
       </div>
     </div>
