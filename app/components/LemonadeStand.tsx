@@ -25,7 +25,7 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
   }
 
   const LemonDivider = () => (
-    <div className="w-full flex items-center justify-center my-4">
+    <div className="w-full flex items-center justify-center my-2">
       <div className="flex-grow h-px bg-palette-text"></div>
       <Image
         src="/images/lemon.png"
@@ -40,7 +40,7 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
 
   return (
     <div className="bg-palette-background min-h-screen flex flex-col">
-      <div className="flex-grow flex flex-col justify-between max-w-sm mx-auto w-full px-4 py-6">
+      <div className="flex-grow flex flex-col justify-between max-w-sm mx-auto w-full px-4 py-4">
         <div>
           <Image 
             src="/images/knox-lemonade-logo.png"
