@@ -66,6 +66,7 @@ export default function LemonadeStand() {
           height={133}
           className="mb-2 mx-auto" 
         />
+        <div className="w-full max-w-sm mx-auto h-1 bg-palette-text mb-4"></div>
         <div className="w-full max-w-sm mx-auto">
           <div className="border-2 border-palette-text bg-palette-menu p-4 rounded-lg shadow-button"> 
             <h2 className="text-xl font-semibold text-palette-text mb-2 text-center">Menu</h2> 
