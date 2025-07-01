@@ -7,8 +7,8 @@ const DynamicLemonadeStand = dynamic(() => import('./components/LemonadeStand'),
 })
 
 export const metadata: Metadata = {
-  title: "Knox's Lemonade Stand",
-  description: 'A refreshing lemonade stand by Knox',
+  title: "Duke and Griff's Lemonade Stand",
+  description: 'A refreshing lemonade stand by Duke and Griff',
 }
 
 export default async function Home() {

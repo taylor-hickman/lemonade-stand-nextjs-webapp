@@ -28,7 +28,7 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
     <div className="w-full flex items-center justify-center my-2">
       <div className="flex-grow h-px bg-palette-text"></div>
       <Image
-        src="/images/lemon.png"
+        src="/images/lemonade-icon.png"
         alt="Lemon divider"
         width={30}
         height={30}
@@ -40,21 +40,21 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
 
   return (
     <div className="bg-palette-background min-h-screen flex flex-col">
-      <div className="flex-grow flex flex-col justify-center items-center max-w-sm mx-auto w-full px-4 py-4">
-        <div className="flex flex-col items-center">
+      <div className="flex-grow flex flex-col justify-between max-w-sm mx-auto w-full px-4 py-4">
+        <div>
           <Image 
-            src="/images/knox-lemonade-logo.png"
-            alt="Knox's Lemonade Stand"
+            src="/images/duke-griff-lemonade-logo.png"
+            alt="Duke and Griff's Lemonade Stand"
             width={300}
             height={100}
-            className="mb-2"
+            className="mb-2 mx-auto"
             priority
           />
           <LemonDivider />
         </div>
         
-        <div className="w-full flex flex-col justify-center">
-          <div className="border-2 border-palette-text bg-palette-menu p-4 rounded-lg shadow-button my-4"> 
+        <div className="flex-grow flex flex-col justify-center my-4">
+          <div className="border-2 border-palette-text bg-palette-menu p-4 rounded-lg shadow-button"> 
             <h2 className="text-xl font-semibold text-palette-text mb-2 text-center">Menu</h2> 
             {menu.map((item, index) => (
               <div key={item.name} className="flex flex-col mb-2"> 
@@ -74,10 +74,10 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
           </div>
         </div>
         
-        <div className="flex flex-col items-center w-full">
+        <div>
           <h2 className="text-xl font-bold text-palette-text mb-2 text-center">Total: ${total.toFixed(2)}</h2> 
           <LemonDivider />
-          <div className="flex flex-col gap-2 w-full"> 
+          <div className="flex flex-col gap-2"> 
             <button
               onClick={handleVenmoPayment}
               aria-label="Pay with Venmo"

@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --color-palette-text: #5a4f4f;
-  --color-palette-button: #ffd700;  
-  --color-palette-menu: #ffffd1;    
-  --color-palette-background: #84bec4; 
+  --color-palette-text: #002868;
+  --color-palette-button: #DC143C;  
+  --color-palette-menu: #FFE4E1;    
+  --color-palette-background: #E6F3FF; 
 }
 
 body {

@@ -10,11 +10,11 @@ const config: Config = {
     extend: {
       colors: {
         palette: {
-          text: '#5a4f4f',  
+          text: '#002868',  
           tertiary: '#FFFF00',
-          button: '#ffd700', 
-          menu: '#ffffd1',   
-          background: '#84bec4', 
+          button: '#DC143C', 
+          menu: '#FFE4E1',   
+          background: '#E6F3FF', 
         },
       },
       boxShadow: {

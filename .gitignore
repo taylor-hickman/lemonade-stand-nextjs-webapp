@@ -8,6 +8,7 @@
 
 # testing
 /coverage
+.claude
 
 # next.js
 /.next/
@@ -27,6 +28,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
 
 # vercel
 .vercel
@@ -34,3 +36,23 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+Thumbs.db
+.DS_Store?
+ehthumbs.db
+Icon?
+
+# Logs
+logs
+*.log
+
+# Bundle analyzer
+.next/analyze/
