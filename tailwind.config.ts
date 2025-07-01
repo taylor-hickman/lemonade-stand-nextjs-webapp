@@ -14,7 +14,7 @@ const config: Config = {
           tertiary: '#FFFF00',
           button: '#DC143C', 
           menu: '#FFE4E1',   
-          background: '#E6F3FF', 
+          background: '#1f5d9dfc', 
         },
       },
       boxShadow: {
