@@ -51,10 +51,12 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#E6F3FF',
+  themeColor: '#1f5d9dfc',
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover'
 }
 
 export default function RootLayout({
@@ -67,6 +69,9 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/images/lemonade-icon.png" />
         <link rel="apple-touch-icon" href="/images/lemonade-icon.png" />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       </head>
       <body className={inter.className}>
         <ErrorBoundary>

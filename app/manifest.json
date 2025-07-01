@@ -1,0 +1,22 @@
+{
+  "name": "Duke and Griff's Lemonade Stand",
+  "short_name": "D&G Lemonade",
+  "description": "Fresh lemonade made with love by Duke and Griff",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1f5d9dfc",
+  "theme_color": "#1f5d9dfc",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/images/lemonade-icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/lemonade-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

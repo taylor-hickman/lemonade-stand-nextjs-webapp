@@ -1,21 +1,40 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import { MenuItem } from '../types'
 import { generateVenmoUrl } from '../utils/venmo'
+import Toast from './Toast'
 
 export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: MenuItem[] }) {
   const [menu, setMenu] = useState<MenuItem[]>([])
   const [isClient, setIsClient] = useState(false)
+  const [toast, setToast] = useState({ show: false, message: '' })
 
   useEffect(() => {
     setMenu(initialMenuItems.map(item => ({ ...item, quantity: 0 })))
     setIsClient(true)
   }, [initialMenuItems])
 
+  const showToast = useCallback((message: string) => {
+    setToast({ show: true, message })
+  }, [])
+
   const addToTotal = (index: number) => {
+    setMenu(prevMenu => {
+      const newMenu = prevMenu.map((item, i) => 
+        i === index ? { ...item, quantity: (item.quantity || 0) + 1 } : item
+      )
+      const updatedItem = newMenu[index]
+      showToast(`Added ${updatedItem.name} to cart`)
+      return newMenu
+    })
+  }
+
+  const removeFromTotal = (index: number) => {
     setMenu(prevMenu => prevMenu.map((item, i) => 
-      i === index ? { ...item, quantity: (item.quantity || 0) + 1 } : item
+      i === index && item.quantity > 0 
+        ? { ...item, quantity: item.quantity - 1 } 
+        : item
     ))
   }
 
@@ -24,8 +43,13 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
   }
 
   const total = menu.reduce((sum, item) => sum + item.price * (item.quantity || 0), 0)
+  const hasItems = menu.some(item => item.quantity > 0)
   
   const handleVenmoPayment = () => {
+    if (!hasItems) {
+      showToast('Please add items to your order first')
+      return
+    }
     const venmoUrl = generateVenmoUrl(total)
     window.open(venmoUrl, '_blank')
   }
@@ -63,7 +87,12 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
 
   return (
     <div className="bg-palette-background min-h-screen flex flex-col">
-      <div className="flex-grow flex flex-col justify-between max-w-sm mx-auto w-full px-4 py-4">
+      <Toast 
+        message={toast.message} 
+        show={toast.show} 
+        onClose={() => setToast({ show: false, message: '' })} 
+      />
+      <div className="flex flex-col max-w-sm mx-auto w-full px-4 py-4 min-h-screen">
         <div>
           <Image 
             src="/images/duke-griff-logo.png"
@@ -74,49 +103,83 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
             style={{ width: 'auto', height: 'auto' }}
             priority
           />
-          <LemonDivider />
         </div>
         
-        <div className="flex-grow flex flex-col justify-center my-4">
-          <div className="border-2 border-palette-text bg-palette-menu p-4 rounded-lg shadow-button"> 
-            <h2 className="text-xl font-semibold text-palette-text mb-2 text-center">Menu</h2>
+        <div className="flex-1 flex flex-col py-2">
+          <div className="border-2 border-palette-text bg-palette-menu p-4 rounded-lg shadow-button max-h-[60vh] overflow-y-auto scrollbar-thin"> 
+            <h2 className="text-xl font-semibold text-palette-text mb-3 text-center sticky top-0 bg-palette-menu pb-2">Menu</h2>
  
-            {menu.map((item, index) => (
-              <div key={item.name} className="flex flex-col mb-2"> 
-                <div className="flex justify-between items-center mb-1"> 
+            {menu.length === 0 ? (
+              <p className="text-center text-palette-text py-8">Loading menu...</p>
+            ) : (
+              <>
+                {menu.map((item, index) => (
+              <div key={item.name} className="mb-4 last:mb-0"> 
+                <div className="flex justify-between items-center mb-2"> 
                   <span className="text-base font-medium text-palette-text">{item.name}</span> 
-                  <span className="text-sm text-palette-text">${item.price.toFixed(2)} - Qty: {item.quantity || 0}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-base text-palette-text">${item.price.toFixed(2)}</span>
+                    {item.quantity > 0 && (
+                      <span className="bg-palette-button text-white px-2 py-1 rounded text-sm font-semibold">
+                        Qty: {item.quantity}
+                      </span>
+                    )}
+                  </div>
                 </div>
-                <button
-                  onClick={() => addToTotal(index)}
-                  aria-label={`Add ${item.name} to order`}
-                  className="w-full px-4 py-1 border-2 border-palette-text bg-palette-button text-base font-medium text-palette-text shadow-button transition-all duration-300 ease-out hover:shadow-buttonHover"
-                >
-                  Add
-                </button>
+                <div className="flex items-center gap-2">
+                  {item.quantity > 0 && (
+                    <button
+                      onClick={() => removeFromTotal(index)}
+                      aria-label={`Remove ${item.name} from order`}
+                      className="px-3 py-1 border-2 border-palette-text bg-white text-palette-text font-bold rounded-full shadow-button hover:bg-palette-menu transition-colors"
+                    >
+                      -
+                    </button>
+                  )}
+                  <button
+                    onClick={() => addToTotal(index)}
+                    aria-label={`Add ${item.name} to order`}
+                    className="flex-1 px-4 py-2 border-2 border-palette-text bg-palette-button text-base font-medium text-white shadow-button transition-all duration-200 ease-out hover:shadow-buttonHover hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none active:translate-x-1 active:translate-y-1"
+                  >
+                    Add {item.quantity > 0 && `(${item.quantity})`}
+                  </button>
+                </div>
               </div>
             ))}
+              </>
+            )}
           </div>
         </div>
         
-        <div>
-          <h2 className="text-xl font-bold text-palette-text mb-2 text-center">Total: ${total.toFixed(2)}</h2> 
-          <LemonDivider />
-          <div className="flex flex-col gap-2"> 
+        <div className="mt-auto pb-safe">
+          <div className="border-2 border-palette-text bg-white p-4 rounded-lg shadow-button mb-3">
+            <h2 className="text-2xl font-bold text-palette-text text-center">
+              Total: ${total.toFixed(2)}
+            </h2>
+            {hasItems && (
+              <p className="text-sm text-palette-text text-center mt-1">
+                {menu.filter(item => item.quantity > 0).length} different items
+              </p>
+            )}
+          </div>
+          {hasItems && <LemonDivider />}
+          <div className="flex flex-col gap-2 mt-3"> 
             <button
               onClick={handleVenmoPayment}
               aria-label="Pay with Venmo"
-              className="w-full px-4 py-2 border-2 border-palette-text bg-palette-button text-base font-medium text-palette-text shadow-button transition-all duration-300 ease-out hover:shadow-buttonHover"
+              className="w-full px-4 py-3 border-2 border-palette-text bg-palette-button text-base font-medium text-white shadow-button transition-all duration-200 ease-out hover:shadow-buttonHover hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none active:translate-x-1 active:translate-y-1"
             >
               Pay with Venmo
             </button>
-            <button
-              onClick={clearAll}
-              aria-label="Clear all items"
-              className="w-full px-4 py-2 border-2 border-palette-text bg-palette-button text-base font-medium text-palette-text shadow-button transition-all duration-300 ease-out hover:shadow-buttonHover"
-            >
-              Clear All
-            </button>
+            {hasItems && (
+              <button
+                onClick={clearAll}
+                aria-label="Clear all items"
+                className="w-full px-4 py-3 border-2 border-palette-text bg-white text-base font-medium text-palette-text shadow-button transition-all duration-200 ease-out hover:bg-palette-menu hover:shadow-buttonHover hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none active:translate-x-1 active:translate-y-1"
+              >
+                Clear All
+              </button>
+            )}
           </div>
         </div>
       </div>
