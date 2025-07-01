@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     siteName: "Duke and Griff's Lemonade Stand",
     images: [
       {
-        url: '/images/duke-griff-lemonade-logo.png',
+        url: '/images/duke-griff-logo.png',
         width: 300,
         height: 100,
         alt: "Duke and Griff's Lemonade Stand Logo"
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "Duke and Griff's Lemonade Stand",
     description: 'Fresh, delicious lemonade made with love by Duke and Griff.',
-    images: ['/images/duke-griff-lemonade-logo.png']
+    images: ['/images/duke-griff-logo.png']
   },
   robots: {
     index: true,

@@ -66,7 +66,7 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
       <div className="flex-grow flex flex-col justify-between max-w-sm mx-auto w-full px-4 py-4">
         <div>
           <Image 
-            src="/images/duke-griff-lemonade-logo.png"
+            src="/images/duke-griff-logo.png"
             alt="Duke and Griff's Lemonade Stand"
             width={300}
             height={100}
