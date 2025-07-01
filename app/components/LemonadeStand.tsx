@@ -1,11 +1,17 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { MenuItem } from '../types'
 import { generateVenmoUrl } from '../utils/venmo'
 
 export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: MenuItem[] }) {
-  const [menu, setMenu] = useState<MenuItem[]>(initialMenuItems)
+  const [menu, setMenu] = useState<MenuItem[]>([])
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setMenu(initialMenuItems.map(item => ({ ...item, quantity: 0 })))
+    setIsClient(true)
+  }, [initialMenuItems])
 
   const addToTotal = (index: number) => {
     setMenu(prevMenu => prevMenu.map((item, i) => 
@@ -38,6 +44,23 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
     </div>
   )
 
+  if (!isClient) {
+    return (
+      <div className="bg-palette-background min-h-screen flex items-center justify-center">
+        <div className="max-w-sm mx-auto text-center px-4">
+          <div className="border-2 border-palette-text bg-palette-menu p-6 rounded-lg shadow-button">
+            <div className="flex flex-col items-center space-y-4">
+              <div className="w-8 h-8 border-2 border-palette-text border-t-transparent rounded-full animate-spin"></div>
+              <div className="text-lg font-semibold text-palette-text">
+                Preparing your lemonade stand...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="bg-palette-background min-h-screen flex flex-col">
       <div className="flex-grow flex flex-col justify-between max-w-sm mx-auto w-full px-4 py-4">
@@ -48,6 +71,7 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
             width={300}
             height={100}
             className="mb-2 mx-auto"
+            style={{ width: 'auto', height: 'auto' }}
             priority
           />
           <LemonDivider />
@@ -55,7 +79,8 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
         
         <div className="flex-grow flex flex-col justify-center my-4">
           <div className="border-2 border-palette-text bg-palette-menu p-4 rounded-lg shadow-button"> 
-            <h2 className="text-xl font-semibold text-palette-text mb-2 text-center">Menu</h2> 
+            <h2 className="text-xl font-semibold text-palette-text mb-2 text-center">Menu</h2>
+ 
             {menu.map((item, index) => (
               <div key={item.name} className="flex flex-col mb-2"> 
                 <div className="flex justify-between items-center mb-1"> 
