@@ -31,19 +31,21 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
   }
 
   const removeFromTotal = (index: number) => {
-    setMenu(prevMenu => prevMenu.map((item, i) => 
-      i === index && item.quantity > 0 
-        ? { ...item, quantity: item.quantity - 1 } 
+    setMenu(prevMenu => prevMenu.map((item, i) => {
+      if (i !== index) return item
+      const currentQuantity = item.quantity ?? 0
+      return currentQuantity > 0 
+        ? { ...item, quantity: currentQuantity - 1 } 
         : item
-    ))
+    }))
   }
 
   const clearAll = () => {
     setMenu(prevMenu => prevMenu.map(item => ({ ...item, quantity: 0 })))
   }
 
-  const total = menu.reduce((sum, item) => sum + item.price * (item.quantity || 0), 0)
-  const hasItems = menu.some(item => item.quantity > 0)
+  const total = menu.reduce((sum, item) => sum + item.price * (item.quantity ?? 0), 0)
+  const hasItems = menu.some(item => (item.quantity ?? 0) > 0)
   
   const handleVenmoPayment = () => {
     if (!hasItems) {
@@ -93,72 +95,83 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
         onClose={() => setToast({ show: false, message: '' })} 
       />
       <div className="flex flex-col max-w-sm mx-auto w-full px-4 py-4 min-h-screen">
-        <div>
+        {/* Header Logo */}
+        <header className="flex-shrink-0 mb-4">
           <Image 
             src="/images/duke-griff-logo.png"
             alt="Duke and Griff's Lemonade Stand"
             width={300}
             height={100}
-            className="mb-2 mx-auto"
+            className="mx-auto"
             style={{ width: 'auto', height: 'auto' }}
             priority
           />
-        </div>
+        </header>
         
-        <div className="flex-1 flex flex-col py-2">
-          <div className="border-2 border-palette-text bg-palette-menu p-4 rounded-lg shadow-button max-h-[60vh] overflow-y-auto scrollbar-thin"> 
-            <h2 className="text-xl font-semibold text-palette-text mb-3 text-center sticky top-0 bg-palette-menu pb-2">Menu</h2>
+        {/* Menu Section */}
+        <main className="flex-shrink-0 mb-4">
+          <div className="border-2 border-palette-text bg-palette-menu p-4 rounded-lg shadow-button"> 
+            <h2 className="text-xl font-semibold text-palette-text mb-4 text-center">Menu</h2>
  
             {menu.length === 0 ? (
               <p className="text-center text-palette-text py-8">Loading menu...</p>
             ) : (
-              <>
-                {menu.map((item, index) => (
-              <div key={item.name} className="mb-4 last:mb-0"> 
-                <div className="flex justify-between items-center mb-2"> 
-                  <span className="text-base font-medium text-palette-text">{item.name}</span> 
-                  <div className="flex items-center gap-2">
-                    <span className="text-base text-palette-text">${item.price.toFixed(2)}</span>
-                    {item.quantity > 0 && (
-                      <span className="bg-palette-button text-white px-2 py-1 rounded text-sm font-semibold">
-                        Qty: {item.quantity}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  {item.quantity > 0 && (
-                    <button
-                      onClick={() => removeFromTotal(index)}
-                      aria-label={`Remove ${item.name} from order`}
-                      className="px-3 py-1 border-2 border-palette-text bg-white text-palette-text font-bold rounded-full shadow-button hover:bg-palette-menu transition-colors"
-                    >
-                      -
-                    </button>
-                  )}
-                  <button
-                    onClick={() => addToTotal(index)}
-                    aria-label={`Add ${item.name} to order`}
-                    className="flex-1 px-4 py-2 border-2 border-palette-text bg-palette-button text-base font-medium text-white shadow-button transition-all duration-200 ease-out hover:shadow-buttonHover hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none active:translate-x-1 active:translate-y-1"
-                  >
-                    Add {item.quantity > 0 && `(${item.quantity})`}
-                  </button>
-                </div>
+              <div className="space-y-4">
+                {menu.map((item, index) => {
+                  const quantity = item.quantity ?? 0
+                  const hasQuantity = quantity > 0
+                  
+                  return (
+                    <div key={item.name} className="bg-white rounded-lg border-2 border-palette-text p-4 shadow-sm">
+                      {/* Header with name and price */}
+                      <div className="flex justify-between items-center mb-3">
+                        <h3 className="text-lg font-semibold text-palette-text">{item.name}</h3>
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg font-bold text-palette-text">${item.price.toFixed(2)}</span>
+                          {hasQuantity && (
+                            <span className="bg-palette-button text-white px-2 py-1 rounded-full text-sm font-semibold">
+                              {quantity}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      
+                      {/* Action buttons */}
+                      <div className="flex items-center gap-2">
+                        {hasQuantity && (
+                          <button
+                            onClick={() => removeFromTotal(index)}
+                            aria-label={`Remove one ${item.name} from order`}
+                            className="w-10 h-10 flex items-center justify-center border-2 border-palette-text bg-white text-palette-text font-bold rounded-full shadow-button hover:bg-palette-menu transition-colors"
+                          >
+                            −
+                          </button>
+                        )}
+                        <button
+                          onClick={() => addToTotal(index)}
+                          aria-label={`Add ${item.name} to order`}
+                          className="flex-1 px-4 py-3 border-2 border-palette-text bg-palette-button text-lg font-semibold text-white rounded-lg shadow-button transition-all duration-200 ease-out hover:shadow-buttonHover hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none active:translate-x-1 active:translate-y-1"
+                        >
+                          {hasQuantity ? `Add Another (${quantity} in cart)` : 'Add to Cart'}
+                        </button>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
-            ))}
-              </>
             )}
           </div>
-        </div>
+        </main>
         
-        <div className="mt-auto pb-safe">
+        {/* Footer - Total and Payment */}
+        <footer className="mt-auto pb-safe">
           <div className="border-2 border-palette-text bg-white p-4 rounded-lg shadow-button mb-3">
             <h2 className="text-2xl font-bold text-palette-text text-center">
               Total: ${total.toFixed(2)}
             </h2>
             {hasItems && (
               <p className="text-sm text-palette-text text-center mt-1">
-                {menu.filter(item => item.quantity > 0).length} different items
+                {menu.filter(item => (item.quantity ?? 0) > 0).length} different items
               </p>
             )}
           </div>
@@ -181,7 +194,7 @@ export default function LemonadeStand({ initialMenuItems }: { initialMenuItems: 
               </button>
             )}
           </div>
-        </div>
+        </footer>
       </div>
     </div>
   )
